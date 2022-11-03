@@ -4,18 +4,20 @@ $pdo = pdo_connect_mysql();
 $msg = '';
 // Check that the contact ID exists
 if (isset($_GET['id'])) {
+
     // Select the record that is going to be deleted
-    $stmt = $pdo->prepare('SELECT * FROM contacts WHERE id = ?');
+    $stmt = $pdo->prepare('SELECT * FROM idregister WHERE id = ?');
     $stmt->execute([$_GET['id']]);
-    $contact = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$contact) {
+    $idregister = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$idregister) {
         exit('Contact doesn\'t exist with that ID!');
     }
+
     // Make sure the user confirms beore deletion
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
             // User clicked the "Yes" button, delete record
-            $stmt = $pdo->prepare('DELETE FROM contacts WHERE id = ?');
+            $stmt = $pdo->prepare('DELETE FROM idregister WHERE id = ?');
             $stmt->execute([$_GET['id']]);
             $msg = 'You have deleted the contact!';
         } else {
@@ -32,14 +34,14 @@ if (isset($_GET['id'])) {
 <?=template_header('Delete')?>
 
 <div class="content delete">
-	<h2>Delete Contact #<?=$contact['id']?></h2>
+	<h2>Delete Contact #<?=$idregister['id']?></h2>
     <?php if ($msg): ?>
     <p><?=$msg?></p>
     <?php else: ?>
-	<p>Are you sure you want to delete contact #<?=$contact['id']?>?</p>
+	<p>Are you sure you want to delete contact #<?=$idregister['id']?>?</p>
     <div class="yesno">
-        <a href="delete.php?id=<?=$contact['id']?>&confirm=yes">Yes</a>
-        <a href="delete.php?id=<?=$contact['id']?>&confirm=no">No</a>
+        <a href="delete.php?id=<?=$idregister['id']?>&confirm=yes">Yes</a>
+        <a href="delete.php?id=<?=$idregister['id']?>&confirm=no">No</a>
     </div>
     <?php endif; ?>
 </div>
