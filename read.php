@@ -17,7 +17,7 @@ $stmt->bindValue(':record_per_page', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();
 
 // Fetch the records so we can display them in our template.
-$contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$idregister = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get the total number of contacts, this is so we can determine whether there should be a next and previous button
 $num_contacts = $pdo->query('SELECT COUNT(*) FROM contacts')->fetchColumn();
@@ -32,26 +32,32 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contacts')->fetchColumn();
         <thead>
             <tr>
                 <td>#</td>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Phone</td>
-                <td>Title</td>
-                <td>Created</td>
+                <td>firstName</td>
+                <td>lastName</td>
+                <td>Course</td>
+                <td>Address</td>
+                <td>Birthdate</td>
+		<td>Guardian</td>
+		<td>guardianPhone</td>
+		<td>Created</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($contacts as $contact): ?>
+            <?php foreach ($idregister as $idregister): ?>
             <tr>
-                <td><?=$contact['id']?></td>
-                <td><?=$contact['name']?></td>
-                <td><?=$contact['email']?></td>
-                <td><?=$contact['phone']?></td>
-                <td><?=$contact['title']?></td>
-                <td><?=$contact['created']?></td>
+                <td><?=$idregister['id']?></td>
+                <td><?=$idregister['firstname']?></td>
+                <td><?=$idregister['lastname']?></td>
+                <td><?=$idregister['course']?></td>
+                <td><?=$idregister['address']?></td>
+                <td><?=$idregister['birthdate']?></td>
+                <td><?=$idregister['guardian']?></td>
+                <td><?=$idregister['guardianphone']?></td>
+                <td><?=$idregister['created']?></td>
                 <td class="actions">
-                    <a href="update.php?id=<?=$contact['id']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
-                    <a href="delete.php?id=<?=$contact['id']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    <a href="update.php?id=<?=$idregister['id']?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="delete.php?id=<?=$idregister['id']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>
